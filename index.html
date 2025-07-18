@@ -113,59 +113,6 @@
     </div>
   </section>
 
-  <section class="section chatbox">
-    <h2>🤖 Ask Quantum Buddy</h2>
-    <input type="text" id="question" placeholder="e.g. What is quantum entanglement?">
-<button onclick="askAI()">Ask</button>
-    <div class="chat-response" id="response">Your answer will appear here...</div>
-  </section>
-
-
-
-
-
-<script>
-  async function askAI() {
-    const question = document.getElementById("question").value;
-    const responseBox = document.getElementById("response");
-    
-    responseBox.innerText = "⏳ Thinking quantum thoughts...";
-
-    try {
-      const result = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "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"
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo", // أو gpt-4 لو عندك وصول له
-          messages: [
-            {
-              role: "system",
-              content: "You are a helpful AI assistant specialized in quantum mechanics. Only answer physics-related questions, and explain clearly with examples when possible."
-            },
-            {
-              role: "user",
-              content: question
-            }
-          ],
-          temperature: 0.7
-        })
-      });
-
-      const data = await result.json();
-      const reply = data.choices[0].message.content;
-      responseBox.innerText = reply;
-    } catch (err) {
-      responseBox.innerText = "⚠️ Failed to get response. Check your API key or internet.";
-      console.error(err);
-    }
-  }
-</script>
-
-
-
 
 
 
@@ -502,11 +449,11 @@
     <p>Simple explanations for quantum terms, with real-world analogies.</p>
     <div class="simulation-box">
       <ul style="list-style: none; padding-left: 0;">
-        <li><strong>🔄 Superposition:</strong> A particle can be in multiple states at once. <em>Like a coin spinning in the air — heads and tails at the same time.</em></li><br>
-        <li><strong>🧬 Entanglement:</strong> Two particles share a state. <em>Like twins feeling each other’s emotions no matter the distance.</em></li><br>
-        <li><strong>🚪 Tunneling:</strong> A particle passes through barriers it shouldn't. <em>Like a ghost walking through a wall.</em></li><br>
-        <li><strong>🎯 Uncertainty Principle:</strong> You can't know a particle’s position and speed at the same time. <em>Like trying to take a sharp photo of something moving fast — blur happens.</em></li><br>
-        <li><strong>💡 Wave-Particle Duality:</strong> Quantum objects behave like both waves and particles. <em>Like light acting as both ripple and bullet.</em></li><br>
+        <li><strong>Superposition:</strong> A particle can be in multiple states at once. <em>Like a coin spinning in the air — heads and tails at the same time.</em></li><br>
+        <li><strong>Entanglement:</strong> Two particles share a state. <em>Like twins feeling each other’s emotions no matter the distance.</em></li><br>
+        <li><strong> Tunneling:</strong> A particle passes through barriers it shouldn't. <em>Like a ghost walking through a wall.</em></li><br>
+        <li><strong> Uncertainty Principle:</strong> You can't know a particle’s position and speed at the same time. <em>Like trying to take a sharp photo of something moving fast — blur happens.</em></li><br>
+        <li><strong>Wave-Particle Duality:</strong> Quantum objects behave like both waves and particles. <em>Like light acting as both ripple and bullet.</em></li><br>
       </ul>
     </div>
   </section>

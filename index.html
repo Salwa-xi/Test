@@ -106,7 +106,7 @@
 
 
   <section class="section">
-    <h2>🧠 Quantum Quiz Challenge</h2>
+    <h2>Quantum Quiz Challenge</h2>
     <div class="simulation-box">
       <div id="quizContainer">
         <p id="quizQuestion">Loading...</p>
@@ -240,13 +240,13 @@
   
 
   <section class="section">
-    <h2>🔬 Heisenberg's Uncertainty Principle</h2>
+    <h2> Heisenberg's Uncertainty Principle</h2>
     <p>You cannot precisely measure both the position and momentum of a particle at the same time.</p>
     <div class="simulation-box">
       <canvas id="uncertaintyCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
       <div style="margin-top:15px;">
-        <button onclick="measurePosition()">🎯 Measure Position</button>
-        <button onclick="measureVelocity()">💨 Measure Velocity</button>
+        <button onclick="measurePosition()"> Measure Position</button>
+        <button onclick="measureVelocity()"> Measure Velocity</button>
       </div>
       <p id="uncertaintyResult" style="margin-top:10px; font-weight:bold;"></p>
     </div>
@@ -286,7 +286,7 @@
 
 
   <section class="section">
-    <h2>🧬 Quantum Entanglement</h2>
+    <h2> Quantum Entanglement</h2>
     <p>Two particles become entangled when their states are linked together, even across vast distances. Change one, and the other changes instantly.</p>
     <div class="simulation-box">
       <canvas id="entanglementCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
@@ -332,12 +332,12 @@
 
 
   <section class="section">
-    <h2>🚪 Quantum Tunneling</h2>
+    <h2>Quantum Tunneling</h2>
     <p>Quantum tunneling allows particles to pass through barriers, even if they don't have enough energy—like magic, but real!</p>
     <div class="simulation-box">
       <canvas id="tunnelingCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
       <div style="margin-top:15px;">
-        <button onclick="attemptTunneling()">🚀 Attempt Tunneling</button>
+        <button onclick="attemptTunneling()">Attempt Tunneling</button>
       </div>
       <p id="tunnelingResult" style="margin-top:10px; font-weight:bold;">Try to tunnel through the barrier!</p>
     </div>
@@ -419,7 +419,7 @@
   
 
 <section class="section">
-  <h2>🎯 Double-Slit Experiment</h2>
+  <h2> Double-Slit Experiment</h2>
   <p>Particles like electrons create interference patterns when not observed. But when we watch... they behave like particles!</p>
   <div class="simulation-box">
     <canvas id="slitCanvas" width="300" height="150" style="background:#111; border:1px solid #0ff;"></canvas>
@@ -460,7 +460,7 @@
       slitCtx.fillStyle = "#f00";
       slitCtx.fill();
 
-      document.getElementById("slitResult").innerText = "🧍 Particle was observed. It acted like a particle!";
+      document.getElementById("slitResult").innerText = " Particle was observed. It acted like a particle!";
     } else {
       // Simulate wave interference pattern
       for (let i = 0; i < 20; i++) {
@@ -472,7 +472,7 @@
         slitCtx.fill();
       }
 
-      document.getElementById("slitResult").innerText = "🌊 No observation. Wave interference pattern formed!";
+      document.getElementById("slitResult").innerText = "No observation. Wave interference pattern formed!";
     }
   }
 
@@ -488,12 +488,12 @@
   
 
 <section class="section">
-  <h2>🌌 Quantum Spacetime Vortex</h2>
+  <h2> Quantum Spacetime Vortex</h2>
   <p>Enter a swirling quantum vortex where particles bend space, twist time, and obey no logic but quantum rules!</p>
   <div class="simulation-box">
     <canvas id="vortexCanvas" width="300" height="300" style="background:#000; border:1px solid #0ff;"></canvas>
     <div style="margin-top:15px;">
-      <button onclick="startVortex()">🌀 Enter the Vortex</button>
+      <button onclick="startVortex()"> Enter the Vortex</button>
       <label style="margin-left:10px;">
         <input type="checkbox" id="observeVortex"> 👁️ Observe Collapse
       </label>
@@ -540,8 +540,8 @@
         vortexCtx.stroke();
 
         document.getElementById("vortexResult").innerText =
-          collapse ? "👁️ You observed it... and it collapsed into a single point." : 
-                     "🌈 The vortex faded... infinite states remain.";
+          collapse ? "You observed it... and it collapsed into a single point." : 
+                     "The vortex faded... infinite states remain.";
       }
     }
 

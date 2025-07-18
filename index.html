@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quantum Buddy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to bottom right, #0b0c2a, #000);
+      color: #fff;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      background-image: url('https://images.unsplash.com/photo-1581320544063-85e436f8eebf?auto=format&fit=crop&w=1950&q=80');
+      background-size: cover;
+      background-position: center;
+      color: #0ff;
+    }
+
+    .section {
+      padding: 40px 20px;
+      border-bottom: 1px solid #222;
+    }
+
+    h2 {
+      color: #0ff;
+    }
+
+    button {
+      background: #0ff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00bcd4;
+    }
+
+    .simulation-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 10px;
+      border: 1px solid #0ff;
+    }
+
+    .chatbox {
+      padding: 20px;
+      background: #111;
+      border-top: 2px solid #0ff;
+    }
+
+    .chatbox input {
+      width: 70%;
+      padding: 10px;
+      margin-right: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .chatbox button {
+      background: #0ff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+
+    .chat-response {
+      margin-top: 20px;
+      background: #222;
+      padding: 10px;
+      border-radius: 10px;
+      min-height: 50px;
+      border: 1px solid #0ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #777;
+      background: #000;
+      border-top: 1px solid #111;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌌 Quantum Buddy</h1>
+    <p>Your interactive guide to Quantum Mechanics</p>
+  </header>
+
+  <section class="section">
+    <h2>🌀 Superposition Principle</h2>
+    <p>In quantum physics, particles can exist in multiple states at once until observed. This is called superposition.</p>
+    <div class="simulation-box">
+      <p>Imagine a quantum coin: it can be HEADS and TAILS at the same time.</p>
+      <button onclick="revealOutcome()">🎲 Observe the Quantum Coin</button>
+      <p id="coinResult" style="margin-top:10px; font-weight: bold;"></p>
+    </div>
+  </section>
+
+  <section class="section chatbox">
+    <h2>🤖 Ask Quantum Buddy</h2>
+    <input type="text" id="question" placeholder="e.g. What is quantum entanglement?">
+<button onclick="askAI()">Ask</button>
+    <div class="chat-response" id="response">Your answer will appear here...</div>
+  </section>
+
+
+
+
+
+<script>
+  async function askAI() {
+    const question = document.getElementById("question").value;
+    const responseBox = document.getElementById("response");
+    
+    responseBox.innerText = "⏳ Thinking quantum thoughts...";
+
+    try {
+      const result = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "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"
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo", // أو gpt-4 لو عندك وصول له
+          messages: [
+            {
+              role: "system",
+              content: "You are a helpful AI assistant specialized in quantum mechanics. Only answer physics-related questions, and explain clearly with examples when possible."
+            },
+            {
+              role: "user",
+              content: question
+            }
+          ],
+          temperature: 0.7
+        })
+      });
+
+      const data = await result.json();
+      const reply = data.choices[0].message.content;
+      responseBox.innerText = reply;
+    } catch (err) {
+      responseBox.innerText = "⚠️ Failed to get response. Check your API key or internet.";
+      console.error(err);
+    }
+  }
+</script>
+
+
+
+
+
+
+  <script>
+    function revealOutcome() {
+      const outcomes = ["It's HEADS!", "It's TAILS!", "It's both... until you looked!"];
+      const random = outcomes[Math.floor(Math.random() * outcomes.length)];
+      document.getElementById("coinResult").innerText = random;
+    }
+
+    function mockAIResponse() {
+      const question = document.getElementById("question").value.toLowerCase();
+      let response = "Hmm... let me think...";
+
+      if (question.includes("entanglement")) {
+        response = "Quantum entanglement is a phenomenon where two particles become linked, so that the state of one instantly influences the other, no matter the distance!";
+      } else if (question.includes("superposition")) {
+        response = "Superposition is when a quantum system exists in multiple states at once until it is observed.";
+      } else {
+        response = "That's a great question! Quantum Buddy is still learning to answer more questions. 🧠";
+      }
+
+      document.getElementById("response").innerText = response;
+    }
+  </script>
+
+
+  <section class="section">
+    <h2>🔬 Heisenberg's Uncertainty Principle</h2>
+    <p>You cannot precisely measure both the position and momentum of a particle at the same time.</p>
+    <div class="simulation-box">
+      <canvas id="uncertaintyCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
+      <div style="margin-top:15px;">
+        <button onclick="measurePosition()">🎯 Measure Position</button>
+        <button onclick="measureVelocity()">💨 Measure Velocity</button>
+      </div>
+      <p id="uncertaintyResult" style="margin-top:10px; font-weight:bold;"></p>
+    </div>
+  </section>
+
+  <script>
+    const canvas = document.getElementById('uncertaintyCanvas');
+    const ctx = canvas.getContext('2d');
+    let x = 150, v = 2;
+
+    function drawParticle(posNoise = 0, velNoise = 0) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const trueX = x + (Math.random() * posNoise - posNoise / 2);
+      ctx.beginPath();
+      ctx.arc(trueX, canvas.height / 2, 10, 0, 2 * Math.PI);
+      ctx.fillStyle = "#0ff";
+      ctx.fill();
+    }
+
+    function measurePosition() {
+      drawParticle(0, 20); // Accurate position, noisy velocity
+      const noisyV = (v + (Math.random() * 4 - 2)).toFixed(2);
+      document.getElementById('uncertaintyResult').innerText = `Position measured accurately. Velocity appears uncertain: ~${noisyV} px/frame`;
+    }
+
+    function measureVelocity() {
+      drawParticle(30, 0); // Noisy position, accurate velocity
+      document.getElementById('uncertaintyResult').innerText = `Velocity measured accurately: ${v.toFixed(2)} px/frame. Position appears fuzzy.`;
+    }
+
+    setInterval(() => {
+      x += v;
+      if (x > canvas.width - 10 || x < 10) v *= -1;
+      drawParticle(10, 0);
+    }, 100);
+  </script>
+
+
+  <section class="section">
+    <h2>🧬 Quantum Entanglement</h2>
+    <p>Two particles become entangled when their states are linked together, even across vast distances. Change one, and the other changes instantly.</p>
+    <div class="simulation-box">
+      <canvas id="entanglementCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
+      <div style="margin-top:15px;">
+        <button onclick="changeEntangledState()">🔄 Flip Particle A</button>
+      </div>
+      <p id="entanglementResult" style="margin-top:10px; font-weight:bold;">Click the button to flip Particle A's state</p>
+    </div>
+  </section>
+
+  <script>
+    const entCanvas = document.getElementById('entanglementCanvas');
+    const entCtx = entCanvas.getContext('2d');
+    let entangledState = true;
+
+    function drawEntangledParticles() {
+      entCtx.clearRect(0, 0, entCanvas.width, entCanvas.height);
+      // Particle A
+      entCtx.beginPath();
+      entCtx.arc(80, entCanvas.height / 2, 15, 0, 2 * Math.PI);
+      entCtx.fillStyle = entangledState ? "#0f0" : "#f00";
+      entCtx.fill();
+      entCtx.font = "14px Orbitron";
+      entCtx.fillText("A", 72, entCanvas.height / 2 + 30);
+
+      // Particle B (instant mirror of A)
+      entCtx.beginPath();
+      entCtx.arc(220, entCanvas.height / 2, 15, 0, 2 * Math.PI);
+      entCtx.fillStyle = entangledState ? "#0f0" : "#f00";
+      entCtx.fill();
+      entCtx.fillText("B", 212, entCanvas.height / 2 + 30);
+    }
+
+    function changeEntangledState() {
+      entangledState = !entangledState;
+      drawEntangledParticles();
+      document.getElementById("entanglementResult").innerText =
+        "You flipped Particle A. Particle B changed instantly!";
+    }
+
+    drawEntangledParticles();
+  </script>
+
+
+  <section class="section">
+    <h2>🚪 Quantum Tunneling</h2>
+    <p>Quantum tunneling allows particles to pass through barriers, even if they don't have enough energy—like magic, but real!</p>
+    <div class="simulation-box">
+      <canvas id="tunnelingCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
+      <div style="margin-top:15px;">
+        <button onclick="attemptTunneling()">🚀 Attempt Tunneling</button>
+      </div>
+      <p id="tunnelingResult" style="margin-top:10px; font-weight:bold;">Try to tunnel through the barrier!</p>
+    </div>
+  </section>
+
+  <script>
+    const tunnelingCanvas = document.getElementById("tunnelingCanvas");
+    const tunnelingCtx = tunnelingCanvas.getContext("2d");
+
+    function drawBarrier() {
+      // Clear
+      tunnelingCtx.clearRect(0, 0, tunnelingCanvas.width, tunnelingCanvas.height);
+
+      // Draw particle
+      tunnelingCtx.beginPath();
+      tunnelingCtx.arc(40, 50, 10, 0, 2 * Math.PI);
+      tunnelingCtx.fillStyle = "#0ff";
+      tunnelingCtx.fill();
+
+      // Draw barrier
+      tunnelingCtx.fillStyle = "#f00";
+      tunnelingCtx.fillRect(130, 30, 20, 40);
+
+      // Destination
+      tunnelingCtx.beginPath();
+      tunnelingCtx.arc(260, 50, 10, 0, 2 * Math.PI);
+      tunnelingCtx.strokeStyle = "#0f0";
+      tunnelingCtx.stroke();
+    }
+
+    function attemptTunneling() {
+      const resultText = document.getElementById("tunnelingResult");
+      const tunneled = Math.random() < 0.5; // 50% chance
+
+      drawBarrier();
+
+      tunnelingCtx.beginPath();
+      tunnelingCtx.arc(tunneled ? 260 : 120, 50, 10, 0, 2 * Math.PI);
+      tunnelingCtx.fillStyle = tunneled ? "#0f0" : "#999";
+      tunnelingCtx.fill();
+
+      resultText.innerText = tunneled
+        ? "Tunneling successful! The particle passed through the barrier."
+        : "Tunneling failed. The particle bounced back.";
+    }
+
+    drawBarrier();
+  </script>
+
+
+  
+  <section class="section">
+    <h2>🧠 Quantum Quiz Challenge</h2>
+    <div class="simulation-box">
+      <div id="quizContainer">
+        <p id="quizQuestion">Loading...</p>
+        <form id="quizForm"></form>
+        <button onclick="nextQuestion()">Next</button>
+        <p id="quizFeedback" style="margin-top:10px; font-weight:bold;"></p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const questions = [
+      {
+        q: "❓ What happens when you measure a particle's position very accurately?",
+        options: [
+          "You can also measure its velocity precisely.",
+          "The particle disappears.",
+          "The particle’s velocity becomes uncertain.",
+          "It turns into energy."
+        ],
+        correct: 2
+      },
+      {
+        q: "❓ In quantum entanglement, if you change the state of particle A...",
+        options: [
+          "Nothing happens.",
+          "Only A changes.",
+          "B changes immediately, regardless of distance.",
+          "They both vanish."
+        ],
+        correct: 2
+      },
+      {
+        q: "❓ In quantum tunneling, how does the particle pass the barrier?",
+        options: [
+          "By gaining extra energy.",
+          "By chance—it tunnels through probabilistically.",
+          "It teleports.",
+          "It breaks the barrier."
+        ],
+        correct: 1
+      },
+      {
+        q: "❓ What makes quantum particles unique in superposition?",
+        options: [
+          "They split in half.",
+          "They exist in multiple states at once.",
+          "They stop moving.",
+          "They become visible."
+        ],
+        correct: 1
+      },
+      {
+        q: "❓ Which of the following is NOT a quantum concept?",
+        options: [
+          "Quantum Entanglement",
+          "Superposition",
+          "Heisenberg's Uncertainty",
+          "Newtonian Gravity"
+        ],
+        correct: 3
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("quizQuestion").innerText = q.q;
+
+      const form = document.getElementById("quizForm");
+      form.innerHTML = "";
+
+      q.options.forEach((option, index) => {
+        const label = document.createElement("label");
+        label.innerHTML = `<input type="radio" name="answer" value="${index}"> ${option}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement("br"));
+      });
+
+      document.getElementById("quizFeedback").innerText = "";
+    }
+
+    function nextQuestion() {
+      const choices = document.getElementsByName('answer');
+      let selected = -1;
+      for (let i = 0; i < choices.length; i++) {
+        if (choices[i].checked) {
+          selected = parseInt(choices[i].value);
+          break;
+        }
+      }
+
+      if (selected === -1) {
+        document.getElementById("quizFeedback").innerText = "⚠️ Please select an answer.";
+        document.getElementById("quizFeedback").style.color = "#ff0";
+        return;
+      }
+
+      if (selected === questions[currentQuestion].correct) {
+        score++;
+        document.getElementById("quizFeedback").innerText = "✅ Correct!";
+        document.getElementById("quizFeedback").style.color = "#0f0";
+      } else {
+        document.getElementById("quizFeedback").innerText = "❌ Incorrect!";
+        document.getElementById("quizFeedback").style.color = "#f00";
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < questions.length) {
+        setTimeout(loadQuestion, 1000);
+      } else {
+        setTimeout(() => {
+          document.getElementById("quizContainer").innerHTML =
+            `<h3>🎉 Quiz Complete!</h3><p>Your Score: ${score} / ${questions.length}</p>`;
+        }, 1200);
+      }
+    }
+
+    // Load the first question on page load
+    loadQuestion();
+  </script>
+
+
+  <script>
+    function checkAnswer() {
+      const choices = document.getElementsByName('answer');
+      let selected;
+      for (let i = 0; i < choices.length; i++) {
+        if (choices[i].checked) {
+          selected = choices[i].value;
+          break;
+        }
+      }
+
+      const result = document.getElementById('quizResult');
+      if (selected === 'c') {
+        result.innerText = "✅ Correct! According to the Uncertainty Principle, velocity becomes uncertain.";
+        result.style.color = "#0f0";
+      } else if (selected) {
+        result.innerText = "❌ Incorrect. Try again!";
+        result.style.color = "#f00";
+      } else {
+        result.innerText = "⚠️ Please select an answer.";
+        result.style.color = "#ff0";
+      }
+    }
+  </script>
+
+
+  <section class="section">
+    <h2>📚 Quantum Glossary</h2>
+    <p>Simple explanations for quantum terms, with real-world analogies.</p>
+    <div class="simulation-box">
+      <ul style="list-style: none; padding-left: 0;">
+        <li><strong>🔄 Superposition:</strong> A particle can be in multiple states at once. <em>Like a coin spinning in the air — heads and tails at the same time.</em></li><br>
+        <li><strong>🧬 Entanglement:</strong> Two particles share a state. <em>Like twins feeling each other’s emotions no matter the distance.</em></li><br>
+        <li><strong>🚪 Tunneling:</strong> A particle passes through barriers it shouldn't. <em>Like a ghost walking through a wall.</em></li><br>
+        <li><strong>🎯 Uncertainty Principle:</strong> You can't know a particle’s position and speed at the same time. <em>Like trying to take a sharp photo of something moving fast — blur happens.</em></li><br>
+        <li><strong>💡 Wave-Particle Duality:</strong> Quantum objects behave like both waves and particles. <em>Like light acting as both ripple and bullet.</em></li><br>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>

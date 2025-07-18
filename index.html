@@ -691,5 +691,78 @@
 
 
 
+  <section class="section">
+  <h2> Quantum Nova</h2>
+  <p>A collapsing quantum star unleashes multiversal explosions across space, time, and probability itself.</p>
+  <div class="simulation-box">
+    <canvas id="novaCanvas" width="350" height="250" style="background:#000; border:1px solid #0ff;"></canvas>
+    <div style="margin-top:15px;">
+      <button onclick="triggerQuantumNova()">Trigger Collapse</button>
+    </div>
+    <p id="novaResult" style="margin-top:10px; font-weight:bold;"></p>
+  </div>
+</section>
+
+<script>
+  const novaCanvas = document.getElementById("novaCanvas");
+  const novaCtx = novaCanvas.getContext("2d");
+
+  function triggerQuantumNova() {
+    novaCtx.clearRect(0, 0, novaCanvas.width, novaCanvas.height);
+    const explosionType = Math.floor(Math.random() * 4);
+    const colors = ["#f0f", "#0ff", "#ff0", "#fa8072", "#00ff7f"];
+    let frame = 0;
+
+    function drawBurst() {
+      novaCtx.fillStyle = "rgba(0,0,0,0.1)";
+      novaCtx.fillRect(0, 0, novaCanvas.width, novaCanvas.height);
+
+      for (let i = 0; i < 80; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = frame * Math.random();
+        const x = novaCanvas.width / 2 + Math.cos(angle) * radius;
+        const y = novaCanvas.height / 2 + Math.sin(angle) * radius;
+
+        novaCtx.beginPath();
+        novaCtx.arc(x, y, Math.random() * 5 + 1, 0, 2 * Math.PI);
+        novaCtx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+        novaCtx.globalAlpha = Math.random();
+        novaCtx.fill();
+      }
+
+      frame++;
+      if (frame < 60) {
+        requestAnimationFrame(drawBurst);
+      } else {
+        showResult(explosionType);
+      }
+    }
+
+    function showResult(type) {
+      const result = document.getElementById("novaResult");
+      novaCtx.globalAlpha = 1;
+
+      switch (type) {
+        case 0:
+          result.innerText = "Multiversal shockwave! Timelines destabilized.";
+          break;
+        case 1:
+          result.innerText = " Temporal echo detected. Reality folded inwards.";
+          break;
+        case 2:
+          result.innerText = " You observed too closely... Collapse locked to one reality.";
+          break;
+        case 3:
+          result.innerText = " A strange quantum entity emerged from the void.";
+          break;
+      }
+    }
+
+    drawBurst();
+  }
+</script>
+
+
+
 </body>
 </html>

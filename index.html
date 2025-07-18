@@ -223,7 +223,7 @@
       } else {
         setTimeout(() => {
           document.getElementById("quizContainer").innerHTML =
-            `<h3>🎉 Quiz Complete!</h3><p>Your Score: ${score} / ${questions.length}</p>`;
+            `<h3>Quiz Complete!</h3><p>Your Score: ${score} / ${questions.length}</p>`;
         }, 1200);
       }
     }
@@ -285,50 +285,81 @@
   </script>
 
 
-  <section class="section">
-    <h2> Quantum Entanglement</h2>
-    <p>Two particles become entangled when their states are linked together, even across vast distances. Change one, and the other changes instantly.</p>
-    <div class="simulation-box">
-      <canvas id="entanglementCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
-      <div style="margin-top:15px;">
-        <button onclick="changeEntangledState()">Flip Particle A</button>
-      </div>
-      <p id="entanglementResult" style="margin-top:10px; font-weight:bold;">Click the button to flip Particle A's state</p>
+  
+<section class="section">
+  <h2>Quantum Entanglement</h2>
+  <p>Two particles become entangled when their states are linked together, even across vast distances. Change one, and the other changes instantly.</p>
+  <div class="simulation-box">
+    <canvas id="entanglementCanvas" width="300" height="120" style="background:#111; border:1px solid #0ff;"></canvas>
+    <div style="margin-top:15px;">
+      <button onclick="changeEntangledState()">🔄 Flip Particle A</button>
     </div>
-  </section>
+    <p id="entanglementResult" style="margin-top:10px; font-weight:bold;">Click the button to flip Particle A's state</p>
+  </div>
+</section>
 
-  <script>
-    const entCanvas = document.getElementById('entanglementCanvas');
-    const entCtx = entCanvas.getContext('2d');
-    let entangledState = true;
+<script>
+  const entCanvas = document.getElementById('entanglementCanvas');
+  const entCtx = entCanvas.getContext('2d');
+  let entangledState = true;
+  let flipEffect = false;
+  let pulse = 0;
 
-    function drawEntangledParticles() {
-      entCtx.clearRect(0, 0, entCanvas.width, entCanvas.height);
-      // Particle A
-      entCtx.beginPath();
-      entCtx.arc(80, entCanvas.height / 2, 15, 0, 2 * Math.PI);
-      entCtx.fillStyle = entangledState ? "#0f0" : "#f00";
-      entCtx.fill();
-      entCtx.font = "14px Orbitron";
-      entCtx.fillText("A", 72, entCanvas.height / 2 + 30);
+  function drawEntangledParticles() {
+    entCtx.clearRect(0, 0, entCanvas.width, entCanvas.height);
 
-      // Particle B (instant mirror of A)
-      entCtx.beginPath();
-      entCtx.arc(220, entCanvas.height / 2, 15, 0, 2 * Math.PI);
-      entCtx.fillStyle = entangledState ? "#0f0" : "#f00";
-      entCtx.fill();
-      entCtx.fillText("B", 212, entCanvas.height / 2 + 30);
-    }
+    const centerY = entCanvas.height / 2;
+    const stateColor = entangledState ? "#0f0" : "#f00";
+    const twinColor = entangledState ? "#0f0" : "#f00";
+    const pulseSize = 15 + Math.sin(pulse) * 2;
 
-    function changeEntangledState() {
-      entangledState = !entangledState;
-      drawEntangledParticles();
-      document.getElementById("entanglementResult").innerText =
-        "You flipped Particle A. Particle B changed instantly!";
-    }
+    // Particle A
+    entCtx.beginPath();
+    entCtx.arc(80, centerY, pulseSize, 0, 2 * Math.PI);
+    entCtx.fillStyle = stateColor;
+    entCtx.shadowColor = flipEffect ? "#fff" : stateColor;
+    entCtx.shadowBlur = flipEffect ? 20 : 10;
+    entCtx.fill();
+    entCtx.shadowBlur = 0;
+    entCtx.fillStyle = "#fff";
+    entCtx.font = "14px Orbitron";
+    entCtx.fillText("A", 73, centerY + 30);
 
+    // Particle B
+    entCtx.beginPath();
+    entCtx.arc(220, centerY, pulseSize, 0, 2 * Math.PI);
+    entCtx.fillStyle = twinColor;
+    entCtx.shadowColor = flipEffect ? "#fff" : twinColor;
+    entCtx.shadowBlur = flipEffect ? 20 : 10;
+    entCtx.fill();
+    entCtx.shadowBlur = 0;
+    entCtx.fillStyle = "#fff";
+    entCtx.fillText("B", 213, centerY + 30);
+
+    pulse += 0.1;
+  }
+
+  function animateEntanglement() {
     drawEntangledParticles();
-  </script>
+    requestAnimationFrame(animateEntanglement);
+  }
+
+  function changeEntangledState() {
+    entangledState = !entangledState;
+    flipEffect = true;
+    document.getElementById("entanglementResult").innerText =
+      "Entangled state flipped. Both particles updated!";
+    
+    setTimeout(() => {
+      flipEffect = false;
+    }, 300);
+  }
+
+  // Start animation loop
+  animateEntanglement();
+</script>
+
+
 
 
  
@@ -348,7 +379,6 @@
   const tunnelingCtx = tunnelingCanvas.getContext("2d");
 
   function drawBarrier() {
-    // Draw static barrier and destination
     tunnelingCtx.fillStyle = "#f00";
     tunnelingCtx.fillRect(130, 30, 20, 40);
 

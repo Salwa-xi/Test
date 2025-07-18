@@ -453,68 +453,87 @@
 
 
   
-
 <section class="section">
-  <h2> Double-Slit Experiment</h2>
-  <p>Particles like electrons create interference patterns when not observed. But when we watch... they behave like particles!</p>
+  <h2>Quantum Pulse Planet</h2>
+  <p>This mysterious planet pulses in a superposition state. Observe it, and it collapses into reality…</p>
   <div class="simulation-box">
-    <canvas id="slitCanvas" width="300" height="150" style="background:#111; border:1px solid #0ff;"></canvas>
+    <canvas id="pulseCanvas" width="300" height="300" style="background:#000; border:1px solid #0ff;"></canvas>
     <div style="margin-top:15px;">
-      <label>
-        <input type="checkbox" id="observerToggle"> Observe the Particle
+      <button onclick="pulsePlanet()"> Begin Observation</button>
+      <label style="margin-left:10px;">
+        <input type="checkbox" id="observePlanet"> Observe
       </label>
-      <br><br>
-      <button onclick="fireParticle()">Fire Particle</button>
     </div>
-    <p id="slitResult" style="margin-top:10px; font-weight:bold;"></p>
+    <p id="pulseResult" style="margin-top:10px; font-weight:bold;"></p>
   </div>
 </section>
 
-
-
-
-
-
 <script>
-  const slitCanvas = document.getElementById("slitCanvas");
-  const slitCtx = slitCanvas.getContext("2d");
+  const pulseCanvas = document.getElementById("pulseCanvas");
+  const pulseCtx = pulseCanvas.getContext("2d");
 
-  function fireParticle() {
-    slitCtx.clearRect(0, 0, slitCanvas.width, slitCanvas.height);
-    const observed = document.getElementById("observerToggle").checked;
+  function pulsePlanet() {
+    pulseCtx.clearRect(0, 0, pulseCanvas.width, pulseCanvas.height);
+    const observe = document.getElementById("observePlanet").checked;
+    let frame = 0;
+    let radius = 30;
+    let pulsing = true;
 
-    if (observed) {
-      // Draw two vertical lines (slits)
-      slitCtx.fillStyle = "#0ff";
-      slitCtx.fillRect(100, 0, 10, 150);
-      slitCtx.fillRect(190, 0, 10, 150);
+    function draw() {
+      pulseCtx.clearRect(0, 0, pulseCanvas.width, pulseCanvas.height);
 
-      // Draw particle hitting one slit randomly
-      const slitHit = Math.random() < 0.5 ? 105 : 195;
-      slitCtx.beginPath();
-      slitCtx.arc(slitHit, Math.random() * 150, 5, 0, 2 * Math.PI);
-      slitCtx.fillStyle = "#f00";
-      slitCtx.fill();
-
-      document.getElementById("slitResult").innerText = " Particle was observed. It acted like a particle!";
-    } else {
-      // Simulate wave interference pattern
+      // Background stars
       for (let i = 0; i < 20; i++) {
-        const x = 60 + i * 10;
-        const y = 75 + 40 * Math.sin(i * 0.5 + Math.random());
-        slitCtx.beginPath();
-        slitCtx.arc(x, y, 4, 0, 2 * Math.PI);
-        slitCtx.fillStyle = "#0f0";
-        slitCtx.fill();
+        pulseCtx.beginPath();
+        pulseCtx.arc(Math.random() * 300, Math.random() * 300, 1.2, 0, 2 * Math.PI);
+        pulseCtx.fillStyle = "#0ff";
+        pulseCtx.fill();
       }
 
-      document.getElementById("slitResult").innerText = "No observation. Wave interference pattern formed!";
-    }
-  }
+      // Planet
+      pulseCtx.beginPath();
+      pulseCtx.arc(150, 150, radius, 0, 2 * Math.PI);
+      pulseCtx.fillStyle = `hsl(${frame * 4 % 360}, 100%, 50%)`;
+      pulseCtx.shadowBlur = 20;
+      pulseCtx.shadowColor = "#0ff";
+      pulseCtx.fill();
+      pulseCtx.shadowBlur = 0;
 
-  // Optional: draw initial empty canvas
-  slitCtx.clearRect(0, 0, slitCanvas.width, slitCanvas.height);
+      if (observe && frame === 60) {
+        // collapse
+        pulseCtx.beginPath();
+        pulseCtx.arc(150, 150, radius, 0, 2 * Math.PI);
+        pulseCtx.fillStyle = "#f0f";
+        pulseCtx.fill();
+        pulseCtx.shadowBlur = 30;
+        pulseCtx.shadowColor = "#f0f";
+        pulseCtx.fill();
+        document.getElementById("pulseResult").innerText =
+          "👁️ You observed the quantum planet. It collapsed into a fixed glowing form.";
+        return;
+      }
+
+      radius = 30 + Math.sin(frame * 0.2) * 10;
+      frame++;
+
+      if (frame < 120 && !observe) {
+        requestAnimationFrame(draw);
+        document.getElementById("pulseResult").innerText = "The planet pulses… countless states coexist.";
+      } else if (!observe) {
+        document.getElementById("pulseResult").innerText =
+          " You didn’t observe... and the planet remained undefined.";
+      }
+    }
+
+    draw();
+  }
 </script>
+
+
+
+
+
+
 
 
 

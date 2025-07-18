@@ -762,6 +762,110 @@
 </script>
 
 
+<section class="section">
+  <h2>Quantum Constants & Laws</h2>
+  <p>Select a category to explore quantum rules and constants:</p>
+  <div class="simulation-box" style="max-width: 600px; margin: auto;">
+    <select id="quantumCategory" onchange="displayQuantumInfo()" style="width: 100%; padding: 10px; font-family: 'Orbitron'; border-radius: 8px; background: #000; color: #0ff; border: 1px solid #0ff;">
+      <option value="">-- Choose a Category --</option>
+      <option value="laws"> Quantum Laws</option>
+      <option value="constants"> Quantum Constants</option>
+      <option value="physicsConstants"> General Physical Constants</option>
+    </select>
+
+    <div id="quantumInfo" style="margin-top: 20px; padding: 10px; background: #111; border-radius: 10px; border: 1px solid #0ff;"></div>
+  </div>
+</section>
+
+<script>
+  const quantumData = {
+    laws: [
+      {
+        name: "Heisenberg's Uncertainty Principle",
+        formula: "Δx·Δp ≥ ℏ / 2",
+        description: "You can't measure position and momentum of a particle simultaneously with perfect accuracy."
+      },
+      {
+        name: "Superposition",
+        formula: "—",
+        description: "Quantum particles exist in multiple states until they are observed."
+      },
+      {
+        name: "Entanglement",
+        formula: "—",
+        description: "Two particles remain connected, affecting each other instantaneously over distance."
+      },
+      {
+        name: "Wave-Particle Duality",
+        formula: "λ = h / p",
+        description: "Particles like electrons show both wave and particle behavior."
+      },
+      {
+        name: "Quantum Tunneling",
+        formula: "—",
+        description: "Particles can pass through barriers even without enough classical energy."
+      }
+    ],
+    constants: [
+      {
+        name: "Planck's Constant (h)",
+        formula: "h = 6.626 × 10⁻³⁴ J·s",
+        description: "Fundamental constant in quantum mechanics."
+      },
+      {
+        name: "Reduced Planck Constant (ħ)",
+        formula: "ħ = h / 2π = 1.055 × 10⁻³⁴ J·s",
+        description: "Used in most quantum equations."
+      },
+      {
+        name: "Photon Energy",
+        formula: "E = hf",
+        description: "Energy of a photon is proportional to its frequency."
+      }
+    ],
+    physicsConstants: [
+      {
+        name: "Speed of Light (c)",
+        formula: "c = 3 × 10⁸ m/s",
+        description: "Used in quantum field theory and relativity."
+      },
+      {
+        name: "Elementary Charge (e)",
+        formula: "e = 1.602 × 10⁻¹⁹ C",
+        description: "Charge of a single electron."
+      },
+      {
+        name: "Boltzmann Constant (k)",
+        formula: "k = 1.38 × 10⁻²³ J/K",
+        description: "Links temperature with energy at the particle level."
+      }
+    ]
+  };
+
+  function displayQuantumInfo() {
+    const category = document.getElementById("quantumCategory").value;
+    const container = document.getElementById("quantumInfo");
+
+    if (!category) {
+      container.innerHTML = "";
+      return;
+    }
+
+    const items = quantumData[category];
+    let html = `<ul style="list-style: none; padding-left: 0;">`;
+    items.forEach(item => {
+      html += `
+        <li style="margin-bottom: 20px;">
+          <strong style="color:#fff;">${item.name}</strong><br>
+          <span style="color:#0ff;">${item.formula}</span><br>
+          <span style="color:#ccc;">${item.description}</span>
+        </li>
+      `;
+    });
+    html += `</ul>`;
+    container.innerHTML = html;
+  }
+</script>
 
 </body>
 </html>

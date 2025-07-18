@@ -553,15 +553,15 @@
 
 
 
-  
+
 <section class="section">
-  <h2>Superposition Gateway</h2>
+  <h2>🚪 Superposition Gateway</h2>
   <p>Watch a quantum particle enter a gateway and exist in many places... until you observe it!</p>
   <div class="simulation-box">
-    <canvas id="superCanvas" width="350" height="200" style="background:#0b0c2a; border:1px solid #0ff; border-radius: 12px;"></canvas>
+    <canvas id="superCanvas" width="350" height="200" style="background:#000001; border:1px solid #0ff; border-radius: 0px;"></canvas>
     <div style="margin-top:15px;">
-      <button onclick="launchSuperParticle()">Launch Particle</button>
-      <label style="margin-left:10px;"><input type="checkbox" id="observeSuper"> 👁️ Observe</label>
+      <button onclick="launchSuperParticle()"> Launch Particle</button>
+      <label style="margin-left:10px;"><input type="checkbox" id="observeSuper">  Observe</label>
     </div>
     <p id="superResult" style="margin-top:10px; font-weight:bold;"></p>
   </div>
@@ -623,7 +623,7 @@
         ctx.globalAlpha = 1;
         if (observe) {
           const finalX = trails[0].x.toFixed(1);
-          document.getElementById("superResult").innerText = ` Collapse complete. Particle locked at x=${finalX}`;
+          document.getElementById("superResult").innerText = `Collapse complete. Particle locked at x=${finalX}`;
         } else {
           document.getElementById("superResult").innerText = " Superposition state faded into the quantum void...";
         }

@@ -202,7 +202,7 @@
       }
 
       if (selected === -1) {
-        document.getElementById("quizFeedback").innerText = "⚠️ Please select an answer.";
+        document.getElementById("quizFeedback").innerText = "⚠ Please select an answer.";
         document.getElementById("quizFeedback").style.color = "#ff0";
         return;
       }
@@ -331,89 +331,95 @@
   </script>
 
 
-  <section class="section">
-    <h2>Quantum Tunneling</h2>
-    <p>Quantum tunneling allows particles to pass through barriers, even if they don't have enough energy—like magic, but real!</p>
-    <div class="simulation-box">
-      <canvas id="tunnelingCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
-      <div style="margin-top:15px;">
-        <button onclick="attemptTunneling()">Attempt Tunneling</button>
-      </div>
-      <p id="tunnelingResult" style="margin-top:10px; font-weight:bold;">Try to tunnel through the barrier!</p>
+ 
+<section class="section">
+  <h2>Quantum Tunneling</h2>
+  <p>Quantum tunneling allows particles to pass through barriers, even if they don't have enough energy—like magic, but real!</p>
+  <div class="simulation-box">
+    <canvas id="tunnelingCanvas" width="300" height="100" style="background:#111; border:1px solid #0ff;"></canvas>
+    <div style="margin-top:15px;">
+      <button onclick="attemptTunneling()">Attempt Tunneling</button>
     </div>
-  </section>
+    <p id="tunnelingResult" style="margin-top:10px; font-weight:bold;">Try to tunnel through the barrier!</p>
+  </div>
+</section>
+<script>
+  const tunnelingCanvas = document.getElementById("tunnelingCanvas");
+  const tunnelingCtx = tunnelingCanvas.getContext("2d");
 
-  <script>
-    const tunnelingCanvas = document.getElementById("tunnelingCanvas");
-    const tunnelingCtx = tunnelingCanvas.getContext("2d");
+  function drawBarrier() {
+    // Draw static barrier and destination
+    tunnelingCtx.fillStyle = "#f00";
+    tunnelingCtx.fillRect(130, 30, 20, 40);
 
-    function drawBarrier() {
-      // Clear
+    tunnelingCtx.beginPath();
+    tunnelingCtx.arc(260, 50, 10, 0, 2 * Math.PI);
+    tunnelingCtx.strokeStyle = "#0f0";
+    tunnelingCtx.lineWidth = 2;
+    tunnelingCtx.stroke();
+  }
+
+  function attemptTunneling() {
+    let x = 40;
+    const y = 50;
+    const radius = 8;
+    const speed = 2;
+    const barrierX = 130;
+    const tunneled = Math.random() < 0.5;
+    const resultText = document.getElementById("tunnelingResult");
+
+    function animate() {
       tunnelingCtx.clearRect(0, 0, tunnelingCanvas.width, tunnelingCanvas.height);
+      drawBarrier();
 
       // Draw particle
       tunnelingCtx.beginPath();
-      tunnelingCtx.arc(40, 50, 10, 0, 2 * Math.PI);
-      tunnelingCtx.fillStyle = "#0ff";
+      tunnelingCtx.arc(x, y, radius, 0, 2 * Math.PI);
+      tunnelingCtx.fillStyle = tunneled ? "#0f0" : "#0ff";
+      tunnelingCtx.shadowColor = tunneled ? "#0f0" : "#0ff";
+      tunnelingCtx.shadowBlur = 10;
       tunnelingCtx.fill();
+      tunnelingCtx.shadowBlur = 0;
 
-      // Draw barrier
-      tunnelingCtx.fillStyle = "#f00";
-      tunnelingCtx.fillRect(130, 30, 20, 40);
+      // Continue moving
+      if (x < (tunneled ? 260 : barrierX - 5)) {
+        x += speed;
+        requestAnimationFrame(animate);
+      } else {
+        if (tunneled) {
+          resultText.innerText = " Tunneling successful! The particle passed through.";
+        } else {
+          // Bounce effect
+          let bounceCount = 0;
+          function bounce() {
+            tunnelingCtx.clearRect(0, 0, tunnelingCanvas.width, tunnelingCanvas.height);
+            drawBarrier();
+            const offset = Math.sin(bounceCount * 0.5) * 5;
 
-      // Destination
-      tunnelingCtx.beginPath();
-      tunnelingCtx.arc(260, 50, 10, 0, 2 * Math.PI);
-      tunnelingCtx.strokeStyle = "#0f0";
-      tunnelingCtx.stroke();
-    }
+            tunnelingCtx.beginPath();
+            tunnelingCtx.arc(x - offset, y, radius, 0, 2 * Math.PI);
+            tunnelingCtx.fillStyle = "#999";
+            tunnelingCtx.fill();
 
-    function attemptTunneling() {
-      const resultText = document.getElementById("tunnelingResult");
-      const tunneled = Math.random() < 0.5; // 50% chance
-
-      drawBarrier();
-
-      tunnelingCtx.beginPath();
-      tunnelingCtx.arc(tunneled ? 260 : 120, 50, 10, 0, 2 * Math.PI);
-      tunnelingCtx.fillStyle = tunneled ? "#0f0" : "#999";
-      tunnelingCtx.fill();
-
-      resultText.innerText = tunneled
-        ? "Tunneling successful! The particle passed through the barrier."
-        : "Tunneling failed. The particle bounced back.";
-    }
-
-    drawBarrier();
-  </script>
-
-
-  
-
-  <script>
-    function checkAnswer() {
-      const choices = document.getElementsByName('answer');
-      let selected;
-      for (let i = 0; i < choices.length; i++) {
-        if (choices[i].checked) {
-          selected = choices[i].value;
-          break;
+            bounceCount++;
+            if (bounceCount < 10) {
+              requestAnimationFrame(bounce);
+            } else {
+              resultText.innerText = " Tunneling failed. The particle bounced back.";
+            }
+          }
+          bounce();
         }
       }
-
-      const result = document.getElementById('quizResult');
-      if (selected === 'c') {
-        result.innerText = "✅ Correct! According to the Uncertainty Principle, velocity becomes uncertain.";
-        result.style.color = "#0f0";
-      } else if (selected) {
-        result.innerText = "❌ Incorrect. Try again!";
-        result.style.color = "#f00";
-      } else {
-        result.innerText = "⚠️ Please select an answer.";
-        result.style.color = "#ff0";
-      }
     }
-  </script>
+
+    animate();
+  }
+
+  // Draw initial static view
+  tunnelingCtx.clearRect(0, 0, tunnelingCanvas.width, tunnelingCanvas.height);
+  drawBarrier();
+</script>
 
 
   

@@ -444,19 +444,69 @@
   </script>
 
 
-  <section class="section">
-    <h2>📚 Quantum Glossary</h2>
-    <p>Simple explanations for quantum terms, with real-world analogies.</p>
-    <div class="simulation-box">
-      <ul style="list-style: none; padding-left: 0;">
-        <li><strong>Superposition:</strong> A particle can be in multiple states at once. <em>Like a coin spinning in the air — heads and tails at the same time.</em></li><br>
-        <li><strong>Entanglement:</strong> Two particles share a state. <em>Like twins feeling each other’s emotions no matter the distance.</em></li><br>
-        <li><strong> Tunneling:</strong> A particle passes through barriers it shouldn't. <em>Like a ghost walking through a wall.</em></li><br>
-        <li><strong> Uncertainty Principle:</strong> You can't know a particle’s position and speed at the same time. <em>Like trying to take a sharp photo of something moving fast — blur happens.</em></li><br>
-        <li><strong>Wave-Particle Duality:</strong> Quantum objects behave like both waves and particles. <em>Like light acting as both ripple and bullet.</em></li><br>
-      </ul>
+  
+
+<section class="section">
+  <h2>🎯 Double-Slit Experiment</h2>
+  <p>Particles like electrons create interference patterns when not observed. But when we watch... they behave like particles!</p>
+  <div class="simulation-box">
+    <canvas id="slitCanvas" width="300" height="150" style="background:#111; border:1px solid #0ff;"></canvas>
+    <div style="margin-top:15px;">
+      <label>
+        <input type="checkbox" id="observerToggle"> 👁️ Observe the Particle
+      </label>
+      <br><br>
+      <button onclick="fireParticle()">🎬 Fire Particle</button>
     </div>
-  </section>
+    <p id="slitResult" style="margin-top:10px; font-weight:bold;"></p>
+  </div>
+</section>
+
+
+
+
+
+
+<script>
+  const slitCanvas = document.getElementById("slitCanvas");
+  const slitCtx = slitCanvas.getContext("2d");
+
+  function fireParticle() {
+    slitCtx.clearRect(0, 0, slitCanvas.width, slitCanvas.height);
+    const observed = document.getElementById("observerToggle").checked;
+
+    if (observed) {
+      // Draw two vertical lines (slits)
+      slitCtx.fillStyle = "#0ff";
+      slitCtx.fillRect(100, 0, 10, 150);
+      slitCtx.fillRect(190, 0, 10, 150);
+
+      // Draw particle hitting one slit randomly
+      const slitHit = Math.random() < 0.5 ? 105 : 195;
+      slitCtx.beginPath();
+      slitCtx.arc(slitHit, Math.random() * 150, 5, 0, 2 * Math.PI);
+      slitCtx.fillStyle = "#f00";
+      slitCtx.fill();
+
+      document.getElementById("slitResult").innerText = "🧍 Particle was observed. It acted like a particle!";
+    } else {
+      // Simulate wave interference pattern
+      for (let i = 0; i < 20; i++) {
+        const x = 60 + i * 10;
+        const y = 75 + 40 * Math.sin(i * 0.5 + Math.random());
+        slitCtx.beginPath();
+        slitCtx.arc(x, y, 4, 0, 2 * Math.PI);
+        slitCtx.fillStyle = "#0f0";
+        slitCtx.fill();
+      }
+
+      document.getElementById("slitResult").innerText = "🌊 No observation. Wave interference pattern formed!";
+    }
+  }
+
+  // Optional: draw initial empty canvas
+  slitCtx.clearRect(0, 0, slitCanvas.width, slitCanvas.height);
+</script>
 
 </body>
 </html>

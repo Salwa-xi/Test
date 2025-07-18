@@ -99,45 +99,13 @@
 <body>
 
   <header>
-    <h1>🌌 Quantum Buddy</h1>
-    <p>Your interactive guide to Quantum Mechanics</p>
+    <h1>🌌 Quantum </h1>
+   
   </header>
 
-  <section class="section">
-    <h2>🌀 Superposition Principle</h2>
-    <p>In quantum physics, particles can exist in multiple states at once until observed. This is called superposition.</p>
-    <div class="simulation-box">
-      <p>Imagine a quantum coin: it can be HEADS and TAILS at the same time.</p>
-      <button onclick="revealOutcome()">🎲 Observe the Quantum Coin</button>
-      <p id="coinResult" style="margin-top:10px; font-weight: bold;"></p>
-    </div>
-  </section>
 
 
 
-
-  <script>
-    function revealOutcome() {
-      const outcomes = ["It's HEADS!", "It's TAILS!", "It's both... until you looked!"];
-      const random = outcomes[Math.floor(Math.random() * outcomes.length)];
-      document.getElementById("coinResult").innerText = random;
-    }
-
-    function mockAIResponse() {
-      const question = document.getElementById("question").value.toLowerCase();
-      let response = "Hmm... let me think...";
-
-      if (question.includes("entanglement")) {
-        response = "Quantum entanglement is a phenomenon where two particles become linked, so that the state of one instantly influences the other, no matter the distance!";
-      } else if (question.includes("superposition")) {
-        response = "Superposition is when a quantum system exists in multiple states at once until it is observed.";
-      } else {
-        response = "That's a great question! Quantum Buddy is still learning to answer more questions. 🧠";
-      }
-
-      document.getElementById("response").innerText = response;
-    }
-  </script>
 
 
   <section class="section">

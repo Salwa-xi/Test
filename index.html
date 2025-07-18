@@ -550,5 +550,90 @@
 </script>
 
 
+
+
+
+  
+<section class="section">
+  <h2>Superposition Gateway</h2>
+  <p>Watch a quantum particle enter a gateway and exist in many places... until you observe it!</p>
+  <div class="simulation-box">
+    <canvas id="superCanvas" width="350" height="200" style="background:#0b0c2a; border:1px solid #0ff; border-radius: 12px;"></canvas>
+    <div style="margin-top:15px;">
+      <button onclick="launchSuperParticle()">Launch Particle</button>
+      <label style="margin-left:10px;"><input type="checkbox" id="observeSuper"> 👁️ Observe</label>
+    </div>
+    <p id="superResult" style="margin-top:10px; font-weight:bold;"></p>
+  </div>
+</section>
+<script>
+  const canvas = document.getElementById("superCanvas");
+  const ctx = canvas.getContext("2d");
+
+  function launchSuperParticle() {
+    const observe = document.getElementById("observeSuper").checked;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const particleCount = observe ? 1 : 8;
+    const centerY = canvas.height / 2;
+    let t = 0;
+    let frame = 0;
+    const colors = ["#0ff", "#f0f", "#ff0", "#0f0", "#ff6600", "#00bcd4"];
+    const trails = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      const x = 50 + i * 30 + Math.random() * 10;
+      trails.push({
+        x: x,
+        y: centerY,
+        color: colors[i % colors.length],
+        opacity: 1,
+        radius: 8 + Math.random() * 4,
+        dx: Math.random() * 1.5 - 0.75,
+        dy: Math.random() * 1.5 - 0.75
+      });
+    }
+
+    function animate() {
+      frame++;
+      ctx.fillStyle = "rgba(11,12,42, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let p of trails) {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.opacity *= 0.985;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y + Math.sin(t + p.x * 0.05) * 4, p.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = observe ? 30 : 15;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      ctx.globalAlpha = 1;
+      t += 0.05;
+
+      if (frame < 150 && trails.some(p => p.opacity > 0.02)) {
+        requestAnimationFrame(animate);
+      } else {
+        ctx.globalAlpha = 1;
+        if (observe) {
+          const finalX = trails[0].x.toFixed(1);
+          document.getElementById("superResult").innerText = ` Collapse complete. Particle locked at x=${finalX}`;
+        } else {
+          document.getElementById("superResult").innerText = " Superposition state faded into the quantum void...";
+        }
+      }
+    }
+
+    animate();
+  }
+</script>
+
+
 </body>
 </html>

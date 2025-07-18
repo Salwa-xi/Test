@@ -202,17 +202,17 @@
       }
 
       if (selected === -1) {
-        document.getElementById("quizFeedback").innerText = "⚠ Please select an answer.";
+        document.getElementById("quizFeedback").innerText = " Please select an answer.";
         document.getElementById("quizFeedback").style.color = "#ff0";
         return;
       }
 
       if (selected === questions[currentQuestion].correct) {
         score++;
-        document.getElementById("quizFeedback").innerText = "✅ Correct!";
+        document.getElementById("quizFeedback").innerText = " Correct!";
         document.getElementById("quizFeedback").style.color = "#0f0";
       } else {
-        document.getElementById("quizFeedback").innerText = "❌ Incorrect!";
+        document.getElementById("quizFeedback").innerText = " Incorrect!";
         document.getElementById("quizFeedback").style.color = "#f00";
       }
 
@@ -292,7 +292,7 @@
   <div class="simulation-box">
     <canvas id="entanglementCanvas" width="300" height="120" style="background:#111; border:1px solid #0ff;"></canvas>
     <div style="margin-top:15px;">
-      <button onclick="changeEntangledState()">🔄 Flip Particle A</button>
+      <button onclick="changeEntangledState()">Flip Particle A</button>
     </div>
     <p id="entanglementResult" style="margin-top:10px; font-weight:bold;">Click the button to flip Particle A's state</p>
   </div>
@@ -509,7 +509,7 @@
         pulseCtx.shadowColor = "#f0f";
         pulseCtx.fill();
         document.getElementById("pulseResult").innerText =
-          "👁️ You observed the quantum planet. It collapsed into a fixed glowing form.";
+          "You observed the quantum planet. It collapsed into a fixed glowing form.";
         return;
       }
 
@@ -548,7 +548,7 @@
   <div class="simulation-box">
     <canvas id="vortexCanvas" width="300" height="300" style="background:#000; border:1px solid #0ff;"></canvas>
     <div style="margin-top:15px;">
-      <button onclick="startVortex()"> Enter the Vortex</button>
+      <button onclick="startVortex()">Enter the Vortex</button>
       <label style="margin-left:10px;">
         <input type="checkbox" id="observeVortex"> Observe Collapse
       </label>
@@ -616,7 +616,7 @@
 <canvas id="superCanvas" width="350" height="200" style="background:#000; border:1px solid #0ff; border-radius: 0px;"></canvas>
     <div style="margin-top:15px;">
       <button onclick="launchSuperParticle()"> Launch Particle</button>
-      <label style="margin-left:10px;"><input type="checkbox" id="observeSuper">  Observe</label>
+      <label style="margin-left:10px;"><input type="checkbox" id="observeSuper">Observe</label>
     </div>
     <p id="superResult" style="margin-top:10px; font-weight:bold;"></p>
   </div>

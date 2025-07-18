@@ -867,5 +867,73 @@
   }
 </script>
 
+
+
+  
+<section class="section">
+  <h2>Quantum Concepts Explorer</h2>
+  <p>Pick a quantum concept to explore its meaning and watch a short video explanation.</p>
+
+  <select id="conceptSelector" onchange="showConcept()" style="padding: 10px; font-size: 16px; border-radius: 8px;">
+    <option value="">-- Select a Concept --</option>
+    <option value="superposition">🔹 Superposition</option>
+    <option value="entanglement">🔹 Entanglement</option>
+    <option value="uncertainty">🔹 Uncertainty Principle</option>
+    <option value="schrodinger">🔹 Schrödinger’s Cat</option>
+    <option value="tunneling">🔹 Quantum Tunneling</option>
+    <option value="doubleSlit">🔹 Double-Slit Experiment</option>
+  </select>
+
+  <div id="conceptContent" style="margin-top: 25px;" class="simulation-box"></div>
+</section>
+<script>
+  const conceptData = {
+    superposition: {
+      desc: "A particle can be in multiple states (like on/off) at the same time — until it's observed!",
+      video: "https://www.youtube.com/embed/IOYyCHGWJq4"
+    },
+    entanglement: {
+      desc: "When two particles are entangled, changing one affects the other — instantly, even across space!",
+      video: "https://www.youtube.com/embed/ZuvK-od647c"
+    },
+    uncertainty: {
+      desc: "You can't measure a particle's position and momentum both precisely — the more you know one, the less you know the other.",
+      video: "https://www.youtube.com/embed/a8FTr2qMutA"
+    },
+    schrodinger: {
+      desc: "A cat in a box is both alive and dead — until someone opens it. A famous thought experiment about observation.",
+      video: "https://www.youtube.com/embed/UjaAxUO6-Uw"
+    },
+    tunneling: {
+      desc: "Particles can pass through barriers — even if they shouldn't have enough energy to do so!",
+      video: "https://www.youtube.com/embed/CBrsWPCp_rs"
+    },
+    doubleSlit: {
+      desc: "Particles act like waves and interfere with themselves — unless you're watching them!",
+      video: "https://www.youtube.com/embed/A9tKncAdlHQ"
+    }
+  };
+
+  function showConcept() {
+    const key = document.getElementById("conceptSelector").value;
+    const box = document.getElementById("conceptContent");
+
+    if (!key || !conceptData[key]) {
+      box.innerHTML = "";
+      return;
+    }
+
+    const { desc, video } = conceptData[key];
+    box.innerHTML = `
+      <p style="margin-bottom: 10px;">${desc}</p>
+      <iframe width="300" height="170" src="${video}" frameborder="0" allowfullscreen></iframe>
+    `;
+  }
+</script>
+
+
+
+
+
 </body>
 </html>
